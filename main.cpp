@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "Matrix.h"
 
 using namespace std;
@@ -41,6 +42,12 @@ int main() {
     a.init_identity_matrix();
     try {
         cout << "First raised matrix:" << endl << a.pow(k);
+    }
+    catch (const char* msg) {
+        cout << msg << endl;
+    }
+    try {
+        cout << "Determinant of the first matrix: " << a.determinant() << endl;
     }
     catch (const char* msg) {
         cout << msg << endl;

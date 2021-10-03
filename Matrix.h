@@ -9,7 +9,7 @@ using namespace std;
 template<typename T>
 
 class Matrix {
-    int n, m;
+    int n, m, cnt;
     vector<vector<T>> data;
     vector<vector<T>> identity_matrix;
 public:
@@ -21,6 +21,7 @@ public:
     const Matrix operator*(const Matrix&) const;
     const Matrix pow(int);
     const Matrix transpose() const;
+    const T determinant();
     vector<T>& operator[](int i) { return (data[i]); };
     const vector<T>& operator[](int i) const { return (data[i]); };
     template<typename Type> friend istream& operator>>(istream&, Matrix<Type>&);
@@ -148,5 +149,33 @@ const Matrix<T> Matrix<T>::transpose() const {
     }
     return Matrix(res);
 }
+
+template<typename T>
+const T Matrix<T>::determinant() {
+    if (n != m) {
+        throw "You can't calc the determinant of a non-square matrix";
+    }
+    if (n == 1) {
+        return data[0][0];
+    }
+    T sum = 0;
+    for (int x = 0; x < n; ++x) {
+        vector<vector<T>> copy = data;
+        copy.erase(copy.begin());
+        for (int y = 0; y < n - 1; ++y) {
+            copy[y].erase(copy[y].begin() + x);
+        }
+        Matrix<T> add = Matrix(copy);
+        T temp = add.determinant();
+        if (x % 2 == 0) {
+            sum += data[0][x] * temp;
+        }
+        else {
+            sum -= data[0][x] * temp;
+        }
+    }
+    return sum;
+}
+
 
 #endif //MATRIX_MATRIX_H
