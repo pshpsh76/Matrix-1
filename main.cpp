@@ -18,7 +18,7 @@ int main() {
         vector<vector<double>> odds(n, vector<double>(1));
         Matrix<double> a(n, n);
         for (int i = 0; i < n; ++i) {
-            for (int j = 0; i <= n; ++j) {
+            for (int j = 0; j <= n; ++j) {
                 if (j == n) {
                     cin >> odds[i][0];
                 } else {
